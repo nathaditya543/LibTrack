@@ -92,6 +92,18 @@ public class BookService {
         return new ArrayList<>(booksById.values());
     }
 
+    public List<String> getInventory() {
+        List<String> inventory = new ArrayList<>();
+        for (Book book : booksById.values()) {
+            String status = book.isLentOut() ? "LENT_OUT" : "IN_LIBRARY";
+            inventory.add("Book{id=" + book.getId()
+                    + ", title='" + book.getTitle()
+                    + "', isbn='" + book.getIsbn()
+                    + "', status=" + status + "}");
+        }
+        return inventory;
+    }
+
     private void indexBook(Book book) {
         booksByIsbn.put(normalize(book.getIsbn()), book);
         addToListIndex(booksByName, normalize(book.getTitle()), book);
